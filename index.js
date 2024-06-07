@@ -874,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
             radioButtonData: radioButtonData
         };
 
-        fetch('https://your-email-script-endpoint.com/send-email', {
+        fetch('https://madsmk.github.io/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
