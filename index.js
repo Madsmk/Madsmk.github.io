@@ -874,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
             radioButtonData: radioButtonData
         };
 
-        fetch('madsmk.github.io/', {
+        fetch('https://madsmk.github.io/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
