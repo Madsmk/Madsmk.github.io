@@ -623,15 +623,18 @@ form input[type="radio"]:checked + label .radio {
 }
 
 .containerSluttspillTre {
-    max-width: 1100px;
+    max-width: 1100px; /* or whichever width you prefer */
     width: 100%;
     background: #fff;
     padding: 25px;
     border-radius: 15px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* Stack the title and content vertically */
+    align-items: center; /* Center align horizontally */
 }
 
-.title {
+.containerSluttspillTre .title {
     font-size: 2.5em; /* Make the title larger */
     font-weight: bold;
     text-align: center;
@@ -643,27 +646,6 @@ form input[type="radio"]:checked + label .radio {
     background-clip: text; /* Standard property */
     -webkit-text-fill-color: transparent; /* Make text transparent to show gradient */
     color: transparent; /* Fallback for text-fill-color */
-}
-
-.sluttspillTreWrapper {
-    display: flex;
-    gap: 2rem; /* Adjust the gap as needed */
-}
-
-.sluttspillTreTable {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.column h3 {
-    text-align: center;
 }
 
 .match {
@@ -686,9 +668,9 @@ html, body, .sluttspillTreTable, .round16, .quarterfinals, .semifinals, .final {
     justify-content: space-between;
     padding: 20px;
     gap: 20px; /* Horizontal gap between rounds */
+    width: 100%; /* Make the table take up the full width */
 }
 
-/* Each round will be a column */
 .round16, .quarterfinals, .semifinals, .final {
     display: flex;
     flex-direction: column;
@@ -696,17 +678,16 @@ html, body, .sluttspillTreTable, .round16, .quarterfinals, .semifinals, .final {
     flex-grow: 1;
 }
 
-/* Styling for match elements */
 .match {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align horizontally */
-    justify-content: center; /* Center align vertically */
-    margin: 20px 0; /* Vertical gap between match elements */
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
     padding: 10px;
     border: 1px solid #000;
     border-radius: 5px;
-    background-color: #f8f8f8;
+    background-color: #f8f8f8; /* Single background color */
     width: 150px;
 }
 

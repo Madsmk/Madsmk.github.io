@@ -19,7 +19,7 @@
 
     <div class="containerUserDetails">
         <h2>Send inn ditt tips</h2>
-        <form id="tipsForm" action="#" method="POST">
+        <form id="tipsForm">
             <label for="fullName">Fullt navn:</label>
             <input type="text" id="fullName" name="fullName" required>
     
@@ -29,6 +29,13 @@
             <button type="submit">Send inn ditt tips</button>
         </form>
     </div>
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        emailjs.init("h9CcX5Ytepi9higkh"); // Replace with your EmailJS user ID
+    })();
+</script>
 
     <section class="instructions">
         <h2>Instruksjoner</h2>
