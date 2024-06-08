@@ -838,6 +838,8 @@ function populateNextRounds(round16Container, quarterfinalsContainer, semifinals
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    emailjs.init("YOUR_USER_ID"); // Initialize EmailJS with your user ID
+
     const tipsForm = document.getElementById('tipsForm');
 
     tipsForm.addEventListener('submit', function(event) {
@@ -867,11 +869,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        const getPlassAndTeams = (selector) => {
+            const rows = document.querySelectorAll(selector + ' .rad');
+            let data = [];
+            rows.forEach(row => {
+                const plass = row.querySelector('.plass') ? row.querySelector('.plass').textContent.trim() : "";
+                const team = row.querySelector('.land') ? row.querySelector('.land').textContent.trim() : "";
+                data.push({ plass, team });
+            });
+            return data;
+        };
+
+        const plassAndTeams = {};
+        ['A', 'B', 'C', 'D', 'E', 'F'].forEach(group => {
+            plassAndTeams[group] = getPlassAndTeams(`.rangering${group}`);
+        });
+        const allTeamsRanking = getPlassAndTeams('.rangeringAllTeams');
+        const playoffRanking = getPlassAndTeams('.sluttspillTable');
+
         const data = {
             fullName: fullName,
             email: email,
-            checkboxData: checkboxData,
-            radioButtonData: radioButtonData
+            checkboxData: JSON.stringify(checkboxData, null, 2),
+            radioButtonData: JSON.stringify(radioButtonData, null, 2),
+            plassAndTeams: JSON.stringify(plassAndTeams, null, 2),
+            allTeamsRanking: JSON.stringify(allTeamsRanking, null, 2),
+            playoffRanking: JSON.stringify(playoffRanking, null, 2)
         };
 
         emailjs.send('contact_service', 'contact_form', data)
@@ -884,4 +907,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
