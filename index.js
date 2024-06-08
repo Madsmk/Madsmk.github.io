@@ -842,10 +842,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     tipsForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        
+
         const fullName = document.getElementById('fullName').value;
         const email = document.getElementById('email').value;
-        
+
         const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const checkedRadioButtons = document.querySelectorAll('input[type="radio"]:checked');
 
@@ -874,22 +874,14 @@ document.addEventListener('DOMContentLoaded', function() {
             radioButtonData: radioButtonData
         };
 
-        fetch('https://madsmk.github.io/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ to: 'madsmk_lyn@hotmail.com', data: data })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Form data sent successfully!');
-            } else {
-                console.error('Failed to send form data.');
-            }
-        })
-        .catch(error => {
-            console.error('An error occurred while sending form data:', error);
+        emailjs.send('contact_service', 'contact_form', data)
+        .then((response) => {
+            console.log('Email sent successfully!', response.status, response.text);
+            alert('Form submitted successfully!');
+        }, (err) => {
+            console.error('Failed to send email:', err);
+            alert('Failed to submit form.');
         });
     });
 });
+
