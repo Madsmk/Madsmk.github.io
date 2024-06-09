@@ -935,10 +935,10 @@ document.addEventListener('DOMContentLoaded', function() {
         emailjs.send('contact_service', 'contact_form', data)
         .then((response) => {
             console.log('Email sent successfully!', response.status, response.text);
-            alert('Form submitted successfully!');
+            alert('Det tips er registrert. Lykke til!');
         }, (err) => {
             console.error('Failed to send email:', err);
-            alert('Failed to submit form.');
+            alert('Ditt tips ble ikke registrert. Vennligst ta kontakt med Mads');
         });
     });
 });
