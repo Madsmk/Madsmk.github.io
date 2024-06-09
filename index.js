@@ -838,7 +838,7 @@ function populateNextRounds(round16Container, quarterfinalsContainer, semifinals
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    emailjs.init("h9CcX5Ytepi9higkh"); // Initialize EmailJS with your user ID
+    emailjs.init("\YOUR_USER_ID"); // Initialize EmailJS with your user ID
 
     const tipsForm = document.getElementById('tipsForm');
 
@@ -851,21 +851,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const checkedRadioButtons = document.querySelectorAll('input[type="radio"]:checked');
 
+        const deriveTeams = (id) => {
+            // Extract group and match number from ID
+            const match = id.match(/(\w)(\d{2})/);
+            if (!match) return { homeTeam: undefined, awayTeam: undefined };
+
+            const group = match[1];
+            const matchNumber = match[2];
+
+            // Find the corresponding home and away team names
+            const homeTeamElement = document.querySelector(`.row.match${group}${matchNumber} .cell.home`);
+            const awayTeamElement = document.querySelector(`.row.match${group}${matchNumber} .cell.away`);
+
+            const homeTeam = homeTeamElement ? homeTeamElement.textContent.trim() : "";
+            const awayTeam = awayTeamElement ? awayTeamElement.textContent.trim() : "";
+
+            return { homeTeam, awayTeam };
+        };
+
         let checkboxData = [];
         checkedCheckboxes.forEach(checkbox => {
+            const { homeTeam, awayTeam } = deriveTeams(checkbox.id);
             checkboxData.push({
                 id: checkbox.id,
-                homeTeam: checkbox.dataset.home,
-                awayTeam: checkbox.dataset.away
+                homeTeam: homeTeam,
+                awayTeam: awayTeam
             });
         });
 
         let radioButtonData = [];
         checkedRadioButtons.forEach(radioButton => {
+            const { homeTeam, awayTeam } = deriveTeams(radioButton.id);
             radioButtonData.push({
                 id: radioButton.id,
-                homeTeam: radioButton.dataset.home,
-                awayTeam: radioButton.dataset.away
+                homeTeam: homeTeam,
+                awayTeam: awayTeam
             });
         });
 
@@ -874,7 +894,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let data = [];
             rows.forEach(row => {
                 const plass = row.querySelector('.plass') ? row.querySelector('.plass').textContent.trim() : "";
-                const team = row.querySelector('.land') ? row.querySelector('.land').textContent.trim() : "";
+                let team = row.querySelector('.land') ? row.querySelector('.land').textContent.trim() : "";
+                // Remove (opp) and (ned) text
+                team = team.replace(/\(opp\)|\(ned\)/g, '').trim();
                 data.push({ plass, team });
             });
             return data;
@@ -890,20 +912,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = {
             fullName: fullName,
             email: email,
-            checkboxData: JSON.stringify(checkboxData, null, 2),
-            radioButtonData: JSON.stringify(radioButtonData, null, 2),
-            plassAndTeams: JSON.stringify(plassAndTeams, null, 2),
-            allTeamsRanking: JSON.stringify(allTeamsRanking, null, 2),
-            playoffRanking: JSON.stringify(playoffRanking, null, 2)
+            checkboxData: checkboxData,
+            radioButtonData: radioButtonData,
+            plassAndTeams: plassAndTeams,
+            allTeamsRanking: allTeamsRanking,
+            playoffRanking: playoffRanking
         };
 
-        emailjs.send('contact_service', 'contact_form', data)
-        .then((response) => {
-            console.log('Email sent successfully!', response.status, response.text);
-            alert('Form submitted successfully!');
-        }, (err) => {
-            console.error('Failed to send email:', err);
-            alert('Failed to submit form.');
-        });
+        // Log to see the structured data before sending
+        console.log('Data to be sent:', data);
+        //emailjs.send('contact_service', 'contact_form', data)
+        //.then((response) => {
+        //    console.log('Email sent successfully!', response.status, response.text);
+        //    alert('Form submitted successfully!');
+        //}, (err) => {
+        //    console.error('Failed to send email:', err);
+        //    alert('Failed to submit form.');
+        //});
     });
 });
