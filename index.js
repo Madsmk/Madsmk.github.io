@@ -844,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const tipsForm = document.getElementById('tipsForm');
 
-    tipsForm.addEventListener('submit', function(event) {
+    tipsForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
         const fullName = document.getElementById('fullName').value;
@@ -918,8 +918,20 @@ document.addEventListener('DOMContentLoaded', function() {
             playoffRanking: playoffRanking
         };
 
+        // Check the size of data
+        const dataSize = new Blob([JSON.stringify(data)]).size;
+        console.log('Data size:', dataSize, 'bytes');
+
+        if (dataSize > 50000) {
+            console.error('Data exceeds the 50KB limit for EmailJS');
+            alert('Form data is too large to be sent.');
+            return;
+        }
+
         // Log to see the structured data before sending
         console.log('Data to be sent:', JSON.stringify(data, null, 2));
+
+
         emailjs.send('contact_service', 'contact_form', data)
         .then((response) => {
             console.log('Email sent successfully!', response.status, response.text);
