@@ -921,13 +921,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Log to see the structured data before sending
         console.log('Data to be sent:', data);
-        //emailjs.send('contact_service', 'contact_form', data)
-        //.then((response) => {
-        //    console.log('Email sent successfully!', response.status, response.text);
-        //    alert('Form submitted successfully!');
-        //}, (err) => {
-        //    console.error('Failed to send email:', err);
-        //    alert('Failed to submit form.');
-        //});
+        emailjs.send('contact_service', 'contact_form', data)
+        .then((response) => {
+            console.log('Email sent successfully!', response.status, response.text);
+            alert('Form submitted successfully!');
+        }, (err) => {
+            console.error('Failed to send email:', err);
+            alert('Failed to submit form.');
+        });
     });
 });
