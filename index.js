@@ -854,14 +854,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkedRadioButtons = document.querySelectorAll('input[type="radio"]:checked');
 
         const deriveTeams = (id) => {
-            // Extract group and match number from ID
             const match = id.match(/(\w)(\d{2})/);
             if (!match) return { homeTeam: undefined, awayTeam: undefined };
 
             const group = match[1];
             const matchNumber = match[2];
 
-            // Find the corresponding home and away team names
             const homeTeamElement = document.querySelector(`.row.match${group}${matchNumber} .cell.home`);
             const awayTeamElement = document.querySelector(`.row.match${group}${matchNumber} .cell.away`);
 
@@ -897,7 +895,6 @@ document.addEventListener('DOMContentLoaded', function() {
             rows.forEach(row => {
                 const plass = row.querySelector('.plass') ? row.querySelector('.plass').textContent.trim() : "";
                 let team = row.querySelector('.land') ? row.querySelector('.land').textContent.trim() : "";
-                // Remove (opp) and (ned) text
                 team = team.replace(/\(opp\)|\(ned\)/g, '').trim();
                 data.push({ plass, team });
             });
@@ -922,7 +919,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Log to see the structured data before sending
-        console.log('Data to be sent:', data);
+        console.log('Data to be sent:', JSON.stringify(data, null, 2));
         emailjs.send('contact_service', 'contact_form', data)
         .then((response) => {
             console.log('Email sent successfully!', response.status, response.text);
