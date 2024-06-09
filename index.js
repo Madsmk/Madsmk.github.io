@@ -838,7 +838,9 @@ function populateNextRounds(round16Container, quarterfinalsContainer, semifinals
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    emailjs.init("h9CcX5Ytepi9higkh"); // Initialize EmailJS with your user ID
+    emailjs.init({
+        publicKey: "h9CcX5Ytepi9higkh",// Replace with your EmailJS user ID
+    }); 
 
     const tipsForm = document.getElementById('tipsForm');
 
